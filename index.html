@@ -17,8 +17,7 @@
     text-align: center;
     font-size: 13px;
     font-weight: bold;
-    padding: 6px 12px;
-    height: 28px;
+    padding: 6px 12px 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,21 +25,23 @@
   main {
     max-width: 360px;
     margin: 0 auto;
-    padding: 16px;
+    padding: 0 16px 16px;
   }
   .logo-wrap {
     display: flex;
     justify-content: center;
-    padding-top: 12px;
+    padding-top: 0;
+    margin-top: -10px;
+    margin-bottom: 0;
   }
   .logo-img {
-    width: 160px;
-    height: 160px;
+    width: 140px;
+    height: 140px;
     object-fit: contain;
   }
   .title-section {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 0;
   }
   .title-section h1 {
     font-size: 22px;
@@ -110,6 +111,56 @@
     margin-top: 10px;
     font-size: 11px;
     color: #1267B2;
+  }
+  .live-feed-inline {
+    margin: 14px 0 0;
+    padding: 10px 12px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid rgba(18,103,178,0.15);
+    color: #111;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 18px rgba(16,24,40,0.08);
+    overflow: hidden;
+  }
+  .live-feed-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(18,103,178,0.18);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .live-feed-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #E53935;
+    box-shadow: 0 0 10px rgba(229,57,53,0.45);
+    animation: pulse 1.6s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .live-feed-text {
+    display: inline-block;
+    color: #1267B2;
+    font-weight: 700;
+    line-height: 1.2;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    min-height: 20px;
+  }
+  .live-feed-text.fade {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
   }
   .faq-section {
     margin-top: 32px;
@@ -189,7 +240,7 @@
 
   <div class="title-section">
     <h1>Build-A-Bear Rewards</h1>
-    <p>Claim your 50 reward towards Build-A-Bear</p>
+    <p>Claim your $250 reward towards Build-A-Bear</p>
   </div>
 
   <div class="steps">
@@ -207,13 +258,19 @@
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <span class="step-text">Enjoy your 50 reward!</span>
+      <span class="step-text">Enjoy your $250 reward!</span>
     </div>
   </div>
 
   <div class="cta-wrap">
     <a href="https://linkthem.net/aff_c?offer_id=4664&aff_id=3471" rel="noopener noreferrer" class="cta-btn">CLAIM NOW</a>
     <p class="disclaimer">Completing sponsored offers is required to claim your reward.</p>
+  </div>
+
+  <div class="live-feed-inline">
+    <img id="liveFeedAvatar" class="live-feed-avatar" src="https://i.pravatar.cc/40?img=32" alt="Profile">
+    <span class="live-feed-indicator"></span>
+    <span id="liveFeedText" class="live-feed-text">Ava from Austin just received their $250 Build-A-Bear Reward</span>
   </div>
 
   <div class="faq-section">
@@ -246,7 +303,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer">
-          You'll need to complete 4&ndash;5 sponsored offers in order to unlock your 50 Build-A-Bear reward.
+          You'll need to complete 4&ndash;5 sponsored offers in order to unlock your $250 Build-A-Bear reward.
         </div>
       </div>
 
@@ -283,6 +340,30 @@ function toggle(btn) {
     btn.classList.add("open");
   }
 }
+
+var liveFeedText = document.getElementById('liveFeedText');
+var liveFeedAvatar = document.getElementById('liveFeedAvatar');
+var liveFeedItems = [
+  { text: 'Ava from Austin just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=32' },
+  { text: 'Mia from London just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=5' },
+  { text: 'Emma from Toronto just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=12' },
+  { text: 'Olivia from Manchester just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=14' },
+  { text: 'Sophia from Vancouver just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=9' },
+  { text: 'Lily from New York just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=15' }
+];
+var liveFeedIndex = 0;
+
+function cycleLiveFeed() {
+  liveFeedText.classList.add('fade');
+  setTimeout(function() {
+    liveFeedIndex = (liveFeedIndex + 1) % liveFeedItems.length;
+    liveFeedText.textContent = liveFeedItems[liveFeedIndex].text;
+    liveFeedAvatar.src = liveFeedItems[liveFeedIndex].avatar;
+    liveFeedText.classList.remove('fade');
+  }, 300);
+}
+
+setInterval(cycleLiveFeed, 10000);
 </script>
 
 </body>
