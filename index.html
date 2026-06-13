@@ -17,7 +17,7 @@
     text-align: center;
     font-size: 13px;
     font-weight: bold;
-    padding: 6px 12px 4px;
+    padding: 5px 12px 2px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,23 +31,26 @@
     display: flex;
     justify-content: center;
     padding-top: 0;
-    margin-top: -10px;
-    margin-bottom: 0;
+    margin-top: -40px;
+    margin-bottom: -4px;
   }
   .logo-img {
-    width: 210px;
-    height: 210px;
+    width: 180px;
+    height: 180px;
     object-fit: contain;
+    margin-bottom: -30px;
+    margin-top: -30px;
   }
   .title-section {
     text-align: center;
-    margin-top: -5px;
+    margin-top: 60px;
   }
   .title-section h1 {
     font-size: 22px;
     font-weight: 700;
     color: #111;
     margin-bottom: 4px;
+    margin-top: -30px;
   }
   .title-section p {
     font-size: 13px;
@@ -344,16 +347,18 @@ function toggle(btn) {
 var liveFeedText = document.getElementById('liveFeedText');
 var liveFeedAvatar = document.getElementById('liveFeedAvatar');
 var liveFeedItems = [
-  { text: 'Ava from Austin just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=32' },
-  { text: 'Mia from London just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=5' },
-  { text: 'Emma from Toronto just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=12' },
-  { text: 'Olivia from Manchester just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=14' },
-  { text: 'Sophia from Vancouver just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=9' },
-  { text: 'Lily from New York just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=15' },
-  { text: 'Chloe from Los Angeles just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=18' },
-  { text: 'Isabella from Edinburgh just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=6' },
-  { text: 'Grace from Calgary just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=10' },
-  { text: 'Zoe from Bristol just received their $250 Build-A-Bear Reward', avatar: 'https://i.pravatar.cc/40?img=20' }
+  { text: 'Ava from Austin just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/65.jpg' },
+  { text: 'Mia from New York just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/68.jpg' },
+  { text: 'Emma from San Diego just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/45.jpg' },
+  { text: 'Olivia from Chicago just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/22.jpg' },
+  { text: 'Sophia from Houston just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/12.jpg' },
+  { text: 'Lily from Miami just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/34.jpg' },
+  { text: 'Chloe from Seattle just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/50.jpg' },
+  { text: 'Grace from Boston just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/54.jpg' },
+  { text: 'Ella from Denver just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/72.jpg' },
+  { text: 'Zoe from Vancouver just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/10.jpg' },
+  { text: 'Isabella from Toronto just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/77.jpg' },
+  { text: 'Amelia from London just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/42.jpg' }
 ];
 var liveFeedIndex = 0;
 
