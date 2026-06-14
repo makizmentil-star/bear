@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Build‑A‑Bear Rewards</title>
+    <style>
+        :root {
+            --blue: #1267B2;
+            --blue-dark: #0e54a0;
+            --accent: #E53935;
+            --accent-dark: #c62828;
+            --muted: #6b7280;
+            --bg: #f0f4f8;
+            --card: #fff;
+            --radius: 14px;
+            --maxw: 420px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: #111;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            justify-content: center;
+            padding: 16px 16px 32px;
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: var(--maxw)
+        }
+
+        /* ── Top bar ── */
+        .top-bar {
+            background: var(--blue);
+            color: #fff;
+            text-align: center;
+            font-weight: 700;
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            letter-spacing: .02em;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .top-bar .dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(1.2)
+            }
+        }
+
+        /* ── Card ── */
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 20px 18px 22px;
+            box-shadow: 0 8px 28px rgba(16, 24, 40, 0.08);
+        }
+
+        /* ── Logo ── */
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .logo img {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            padding: 0 4px 4px
+        }
+
+        h1 {
+            font-size: 21px;
+            line-height: 1.15;
+            font-weight: 800;
+            margin-bottom: 7px;
+            letter-spacing: -.01em
+        }
+
+        p.lead {
+            color: var(--muted);
+            font-size: 13.5px;
+            margin-bottom: 14px;
+            line-height: 1.5
+        }
+
+        /* ── Testimonial carousel ── */
+        .testimonial-wrap {
+            position: relative;
+            min-height: 80px;
+            margin: 0 0 14px;
+            overflow: hidden;
+        }
+
+        .testimonial-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #f3f8ff;
+            border: 1px solid #dbeafe;
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .6s ease, transform .6s ease;
+            pointer-events: none;
+        }
+
+        .testimonial-item.active {
+            opacity: 1;
+            transform: translateY(0);
+            position: relative;
+            pointer-events: auto;
+        }
+
+        .testimonial-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--blue);
+            flex-shrink: 0;
+            display: block;
+        }
+
+        /* Fallback if image fails */
+        .testimonial-avatar[data-initials] {
+            background: var(--blue);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .testimonial-copy {
+            flex: 1
+        }
+
+        .testimonial-copy strong {
+            display: block;
+            color: #111;
+            font-size: 12.5px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .testimonial-copy span {
+            font-size: 12px;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .t-stars {
+            color: #f6b042;
+            font-size: 10px;
+            margin-bottom: 2px
+        }
+
+        /* ── Dots ── */
+        .t-dots {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 14px;
+        }
+
+        .t-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #d1d5db;
+            transition: background .3s;
+        }
+
+        .t-dot.on {
+            background: var(--blue)
+        }
+
+        /* ── CTA ── */
+        .cta {
+            margin: 4px 0 6px
+        }
+
+        .cta a {
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            background: var(--accent);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 800;
+            letter-spacing: .04em;
+            font-size: 15.5px;
+            box-shadow: 0 6px 20px rgba(217, 48, 37, 0.22);
+            transition: background .2s, transform .1s, box-shadow .2s;
+        }
+
+        .cta a:hover {
+            background: var(--accent-dark);
+            box-shadow: 0 8px 24px rgba(217, 48, 37, 0.3)
+        }
+
+        .cta a:active {
+            transform: scale(0.98)
+        }
+
+        .cta-sub {
+            font-size: 11.5px;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 7px;
+            line-height: 1.4
+        }
+
+        /* ── Rating ── */
+        .rating-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            align-items: center;
+            margin: 12px 0 4px;
+            font-size: 12.5px;
+            color: var(--muted);
+        }
+
+        .stars {
+            color: #f6b042;
+            font-weight: 700;
+            font-size: 14px
+        }
+
+        .rating-label {
+            font-weight: 700;
+            color: #111
+        }
+
+        /* ── Divider ── */
+        .divider {
+            border: none;
+            border-top: 1px solid #f1f3f5;
+            margin: 16px 0
+        }
+
+        /* ── Steps ── */
+        .steps-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: .04em;
+            text-transform: uppercase
+        }
+
+        .steps {
+            display: grid;
+            gap: 9px
+        }
+
+        .step {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 11px 12px;
+            border-radius: 10px;
+            background: #fafafa;
+            border: 1px solid #eef2f7;
+        }
+
+        .step-num {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: var(--blue);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-weight: 700;
+            font-size: 13.5px
+        }
+
+        .step-sub {
+            font-size: 12.5px;
+            color: var(--muted);
+            margin-top: 3px
+        }
+
+        /* ── Trust badges ── */
+        .trust-row {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .trust-icon {
+            font-size: 14px
+        }
+
+        /* ── FAQ ── */
+        .faq-section {
+            margin-top: 16px
+        }
+
+        .faq-section h2 {
+            font-size: 15px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 10px
+        }
+
+        .faq-item {
+            border-top: 1px solid #f1f3f5
+        }
+
+        .faq-item:last-child {
+            border-bottom: 1px solid #f1f3f5
+        }
+
+        .faq-btn {
+            width: 100%;
+            background: none;
+            border: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 13.5px;
+            cursor: pointer;
+            padding: 13px 0;
+            color: #111;
+            text-align: left;
+            gap: 10px;
+        }
+
+        .faq-btn .arrow {
+            flex-shrink: 0;
+            color: var(--muted);
+            font-style: normal;
+            font-size: 11px;
+            transition: transform .25s;
+        }
+
+        .faq-btn[aria-expanded="true"] .arrow {
+            transform: rotate(180deg)
+        }
+
+        .faq-answer {
+            display: none;
+            padding-bottom: 13px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .faq-answer.open {
+            display: block
+        }
+
+        @media(min-width:480px) {
+            h1 {
+                font-size: 23px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .testimonial-item {
+                transition: none
+            }
+
+            .cta a {
+                transition: none
+            }
+
+            .dot {
+                animation: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <div class="top-bar">
+            <span class="dot"></span>
+            Trusted by 3,500+ verified users
+        </div>
+
+        <div class="card" role="main">
+
+            <div class="logo">
+                <img src="logo.png" alt="Build‑A‑Bear Workshop logo" />
+            </div>
+
+            <div class="hero">
+                <h1>Build<strong>-</strong>A<strong>-</strong>Bear Reward</h1>
+                <p class="lead">Complete a few quick sponsored offers to unlock your $250 gift reward. Takes under 30
+                    minutes.</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="rating-row">
+                <div class="stars">★★★★★</div>
+                <div class="rating-label">4.9 / 5</div>
+                <div>— from 3,500+ users</div>
+            </div>
+
+            <!-- Primary CTA -->
+            <div class="cta" style="margin-top:14px">
+                <a href="https://linkthem.net/aff_c?offer_id=4664&aff_id=3471" rel="noopener noreferrer"
+                    aria-label="Claim your $250 Build-A-Bear reward now">
+                    Claim Now
+                </a>
+            </div>
+            <p class="cta-sub">Completing sponsored offers is required to claim your reward. We protect your privacy.
+            </p>
+
+            <!-- Trust badges -->
+            <div class="trust-row">
+                <div class="trust-badge"><span class="trust-icon">🔒</span> Secure &amp; Private</div>
+                <div class="trust-badge"><span class="trust-icon">⚡</span> Fast Verification</div>
+            </div>
+
+            <hr class="divider" />
+
+            <!-- How it works -->
+            <div class="steps-title">How It Works</div>
+            <div class="steps" role="list">
+                <div class="step" role="listitem">
+                    <div class="step-num">1</div>
+                    <div>
+                        <div class="step-text">Tap "Claim Now"</div>
+                        <div class="step-sub">Opens the secure offer portal</div>
+                    </div>
+                </div>
+                <div class="step" role="listitem">
+                    <div class="step-num">2</div>
+                    <div>
+                        <div class="step-text">Enter your details</div>
+                        <div class="step-sub">Just your email and basic info</div>
+                    </div>
+                </div>
+                <div class="step" role="listitem">
+                    <div class="step-num">3</div>
+                    <div>
+                        <div class="step-text">Complete 4–5 sponsored offers</div>
+                        <div class="step-sub">Short surveys, free trials, app downloads</div>
+                    </div>
+                </div>
+                <div class="step" role="listitem">
+                    <div class="step-num">4</div>
+                    <div>
+                        <div class="step-text">Receive your $250 reward</div>
+                        <div class="step-sub">Delivered after offer verification</div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider" />
+
+            <!-- Testimonials -->
+            <div class="testimonial-wrap" id="testimonialWrap" role="region" aria-label="Customer reviews">
+                <div class="testimonial-item active" data-index="0">
+                    <img class="testimonial-avatar"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%231a6bbf'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3EE%3C/text%3E%3C/svg%3E"
+                        alt="Emma from California">
+                    <div class="testimonial-copy">
+                        <div class="t-stars">★★★★★</div>
+                        <strong>Emma · California</strong>
+                        <span>Got my code after finishing the 5th offer — it was much faster than I expected. Super
+                            smooth process!</span>
+                    </div>
+                </div>
+                <div class="testimonial-item" data-index="1">
+                    <img class="testimonial-avatar"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%23e05c2a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3EM%3C/text%3E%3C/svg%3E"
+                        alt="Mia from New York">
+                    <div class="testimonial-copy">
+                        <div class="t-stars">★★★★★</div>
+                        <strong>Mia · New York</strong>
+                        <span>Followed the steps on screen and my reward balance was ready to use in minutes. Couldn't
+                            believe it!</span>
+                    </div>
+                </div>
+                <div class="testimonial-item" data-index="2">
+                    <img class="testimonial-avatar"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%23169b6b'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3EO%3C/text%3E%3C/svg%3E"
+                        alt="Olivia from Texas">
+                    <div class="testimonial-copy">
+                        <div class="t-stars">★★★★★</div>
+                        <strong>Olivia · Texas</strong>
+                        <span>Received the $250 reward code almost immediately after completing the offers. Great way to
+                            save on gifts!</span>
+                    </div>
+                </div>
+                <div class="testimonial-item" data-index="3">
+                    <img class="testimonial-avatar"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%238b3fbf'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3ES%3C/text%3E%3C/svg%3E"
+                        alt="Sara from Florida">
+                    <div class="testimonial-copy">
+                        <div class="t-stars">★★★★★</div>
+                        <strong>Sara · Florida</strong>
+                        <span>Was skeptical at first, but the final survey unlocked my $250 code shortly after. It
+                            really does work!</span>
+                    </div>
+                </div>
+                <div class="testimonial-item" data-index="4">
+                    <img class="testimonial-avatar"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%23c0343a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3EZ%3C/text%3E%3C/svg%3E"
+                        alt="Zoe from Washington">
+                    <div class="testimonial-copy">
+                        <div class="t-stars">★★★★★</div>
+                        <strong>Zoe · Washington</strong>
+                        <span>Exceeded my expectations. Got the discount code in my email just minutes after submitting
+                            everything.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dots -->
+            <div class="t-dots" role="tablist" aria-label="Testimonial navigation">
+                <div class="t-dot on" role="tab" aria-selected="true"></div>
+                <div class="t-dot" role="tab" aria-selected="false"></div>
+                <div class="t-dot" role="tab" aria-selected="false"></div>
+                <div class="t-dot" role="tab" aria-selected="false"></div>
+                <div class="t-dot" role="tab" aria-selected="false"></div>
+            </div>
+
+            <hr class="divider" />
+            <div class="faq-section" id="faq">
+                <h2>Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+                        How long do the offers take?
+                        <i class="arrow">▾</i>
+                    </button>
+                    <div class="faq-answer">Most offers take just a few minutes each. The full process typically takes
+                        15–30 minutes depending on which offers you choose.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+                        What kinds of offers are there?
+                        <i class="arrow">▾</i>
+                    </button>
+                    <div class="faq-answer">Offers include free trials, app downloads, short surveys, and product
+                        sign-ups from our sponsors. You choose which ones to complete.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+                        How many offers do I need to complete?
+                        <i class="arrow">▾</i>
+                    </button>
+                    <div class="faq-answer">You'll need to complete 4–5 sponsored offers to unlock your $250
+                        Build‑A‑Bear reward.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+                        When will I receive my reward?
+                        <i class="arrow">▾</i>
+                    </button>
+                    <div class="faq-answer">Rewards are typically processed within a few business days once all offers
+                        are verified as complete.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+                        Is my personal information safe?
+                        <i class="arrow">▾</i>
+                    </button>
+                    <div class="faq-answer">Yes. Your information is only used to verify your reward eligibility and to
+                        send you your reward code. We never sell your data to third parties.</div>
+                </div>
+            </div>
+
+        </div><!-- .card -->
+    </div><!-- .wrap -->
+
+
+    <script>
+        // ── Testimonial carousel (slower: 8 seconds) ──
+        var items = document.querySelectorAll('.testimonial-item');
+        var dots = document.querySelectorAll('.t-dot');
+        var current = 0;
+
+        function showTestimonial(next) {
+            // fade out current
+            items[current].classList.remove('active');
+            dots[current].classList.remove('on');
+            dots[current].setAttribute('aria-selected', 'false');
+
+            current = (next !== undefined ? next : (current + 1) % items.length);
+
+            // bring in next
+            items[current].classList.add('active');
+            dots[current].classList.add('on');
+            dots[current].setAttribute('aria-selected', 'true');
+        }
+
+        // Auto-cycle every 8 seconds for a more natural, trustworthy feel
+        var timer = setInterval(function () { showTestimonial(); }, 8000);
+
+        // Allow dots to be clicked manually
+        dots.forEach(function (dot, i) {
+            dot.style.cursor = 'pointer';
+            dot.addEventListener('click', function () {
+                clearInterval(timer);
+                showTestimonial(i);
+                timer = setInterval(function () { showTestimonial(); }, 8000);
+            });
+        });
+
+        // ── FAQ accordion ──
+        function toggleFAQ(btn) {
+            var answer = btn.nextElementSibling;
+            var isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+            // Close all
+            document.querySelectorAll('.faq-btn').forEach(function (b) {
+                b.setAttribute('aria-expanded', 'false');
+            });
+            document.querySelectorAll('.faq-answer').forEach(function (a) {
+                a.classList.remove('open');
+            });
+
+            // Open clicked one if it was closed
+            if (!isOpen) {
+                btn.setAttribute('aria-expanded', 'true');
+                answer.classList.add('open');
+            }
+        }
+    </script>
+</body>
+
+</html>
