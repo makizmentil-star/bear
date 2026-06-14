@@ -1,381 +1,503 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Build-A-Bear Rewards</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Claim $250 — Build‑A‑Bear Rewards</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background-color: #F3F3F3;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    min-height: 100vh;
+  :root{
+    --blue:#1267B2;
+    --blue-dark:#0e54a0;
+    --accent:#E53935;
+    --accent-dark:#c62828;
+    --muted:#6b7280;
+    --bg:#f0f4f8;
+    --card:#fff;
+    --radius:14px;
+    --maxw:420px;
   }
-  .top-bar {
-    background-color: #1267B2;
-    color: #fff;
-    text-align: center;
-    font-size: 13px;
-    font-weight: bold;
-    padding: 5px 12px 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:#111;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+    padding:16px 16px 100px;
   }
-  main {
-    max-width: 360px;
-    margin: 0 auto;
-    padding: 0 16px 16px;
+  .wrap{width:100%;max-width:var(--maxw)}
+
+  /* ── Top bar ── */
+  .top-bar{
+    background:var(--blue);
+    color:#fff;
+    text-align:center;
+    font-weight:700;
+    padding:9px 14px;
+    border-radius:10px;
+    font-size:12.5px;
+    letter-spacing:.02em;
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
   }
-  .logo-wrap {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding-top: 0;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    text-align: center;
+  .top-bar .dot{
+    width:8px;height:8px;
+    background:#4ade80;
+    border-radius:50%;
+    display:inline-block;
+    animation:pulse 2s ease-in-out infinite;
   }
-  .logo-img {
-    width: 180px;
-    height: 180px;
-    object-fit: contain;
-    display: block;
-    margin: 0px auto 0;
+  @keyframes pulse{
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.5;transform:scale(1.2)}
   }
-  .title-section {
-    text-align: center;
-    margin-top: 20px;
+
+  /* ── Card ── */
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:20px 18px 22px;
+    box-shadow:0 8px 28px rgba(16,24,40,0.08);
   }
-  .title-section h1 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #111;
-    margin-bottom: 4px;
-    margin-top: -30px;
+
+  /* ── Logo ── */
+  .logo{
+    display:flex;
+    justify-content:center;
+    margin-bottom:14px;
   }
-  .title-section p {
-    font-size: 13px;
-    color: #444;
+  .logo img{
+    width:88px;height:88px;
+    object-fit:contain;
+    border-radius:14px;
   }
-  .steps {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+
+  /* ── Hero ── */
+  .hero{text-align:center;padding:0 4px 4px}
+  h1{font-size:21px;line-height:1.15;font-weight:800;margin-bottom:7px;letter-spacing:-.01em}
+  p.lead{color:var(--muted);font-size:13.5px;margin-bottom:14px;line-height:1.5}
+
+  /* ── Testimonial carousel ── */
+  .testimonial-wrap{
+    position:relative;
+    min-height:80px;
+    margin:0 0 14px;
+    overflow:hidden;
   }
-  .step {
-    background: #fff;
-    border-radius: 8px;
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  .testimonial-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:10px 12px;
+    border-radius:12px;
+    background:#f3f8ff;
+    border:1px solid #dbeafe;
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity .6s ease, transform .6s ease;
+    pointer-events:none;
   }
-  .step-num {
-    background-color: #1267B2;
-    color: #fff;
-    font-weight: 700;
-    font-size: 14px;
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  .testimonial-item.active{
+    opacity:1;
+    transform:translateY(0);
+    position:relative;
+    pointer-events:auto;
   }
-  .step-text {
-    font-size: 14px;
-    color: #111;
-    font-weight: 500;
+  .testimonial-avatar{
+    width:38px;height:38px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid var(--blue);
+    flex-shrink:0;
+    display:block;
   }
-  .cta-wrap {
-    margin-top: 20px;
+  /* Fallback if image fails */
+  .testimonial-avatar[data-initials]{
+    background:var(--blue);
+    color:#fff;
+    font-weight:700;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
-  .cta-btn {
-    display: block;
-    width: 100%;
-    background-color: #E53935;
-    color: #fff;
-    text-align: center;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    padding: 14px;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: background-color 0.15s, transform 0.1s;
-    box-shadow: 0 2px 6px rgba(229,57,53,0.3);
+  .testimonial-copy{flex:1}
+  .testimonial-copy strong{
+    display:block;
+    color:#111;
+    font-size:12.5px;
+    font-weight:700;
+    margin-bottom:3px;
   }
-  .cta-btn:hover { background-color: #C62828; }
-  .cta-btn:active { transform: scale(0.99); }
-  .disclaimer {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 11px;
-    color: #1267B2;
+  .testimonial-copy span{
+    font-size:12px;
+    color:#374151;
+    line-height:1.5;
   }
-  .live-feed-inline {
-    margin: 14px 0 0;
-    padding: 10px 12px;
-    border-radius: 999px;
-    background: #fff;
-    border: 1px solid rgba(18,103,178,0.15);
-    color: #111;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 4px 18px rgba(16,24,40,0.08);
-    overflow: hidden;
+  .t-stars{color:#f6b042;font-size:10px;margin-bottom:2px}
+
+  /* ── Dots ── */
+  .t-dots{
+    display:flex;justify-content:center;gap:5px;margin-bottom:14px;
   }
-  .live-feed-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 1px solid rgba(18,103,178,0.18);
-    object-fit: cover;
-    flex-shrink: 0;
+  .t-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:#d1d5db;transition:background .3s;
   }
-  .live-feed-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #E53935;
-    box-shadow: 0 0 10px rgba(229,57,53,0.45);
-    animation: pulse 1.6s ease-in-out infinite;
-    flex-shrink: 0;
+  .t-dot.on{background:var(--blue)}
+
+  /* ── CTA ── */
+  .cta{margin:4px 0 6px}
+  .cta a{
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    background:var(--accent);
+    color:#fff;
+    padding:15px;
+    border-radius:10px;
+    font-weight:800;
+    letter-spacing:.04em;
+    font-size:15.5px;
+    box-shadow:0 6px 20px rgba(217,48,37,0.22);
+    transition:background .2s, transform .1s, box-shadow .2s;
   }
-  .live-feed-text {
-    display: inline-block;
-    color: #1267B2;
-    font-weight: 700;
-    line-height: 1.2;
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.35s ease, transform 0.35s ease;
-    min-height: 20px;
+  .cta a:hover{background:var(--accent-dark);box-shadow:0 8px 24px rgba(217,48,37,0.3)}
+  .cta a:active{transform:scale(0.98)}
+  .cta-sub{font-size:11.5px;color:var(--muted);text-align:center;margin-top:7px;line-height:1.4}
+
+  /* ── Rating ── */
+  .rating-row{
+    display:flex;justify-content:center;gap:6px;align-items:center;
+    margin:12px 0 4px;font-size:12.5px;color:var(--muted);
   }
-  .live-feed-text.fade {
-    opacity: 0;
-    transform: translateY(-4px);
+  .stars{color:#f6b042;font-weight:700;font-size:14px}
+  .rating-label{font-weight:700;color:#111}
+
+  /* ── Divider ── */
+  .divider{border:none;border-top:1px solid #f1f3f5;margin:16px 0}
+
+  /* ── Steps ── */
+  .steps-title{font-size:13.5px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:10px;letter-spacing:.04em;text-transform:uppercase}
+  .steps{display:grid;gap:9px}
+  .step{
+    display:flex;gap:12px;align-items:center;
+    padding:11px 12px;border-radius:10px;
+    background:#fafafa;border:1px solid #eef2f7;
   }
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.7; }
+  .step-num{
+    width:34px;height:34px;
+    border-radius:8px;
+    background:var(--blue);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:14px;
+    flex-shrink:0;
   }
-  .faq-section {
-    margin-top: 32px;
+  .step-text{font-weight:700;font-size:13.5px}
+  .step-sub{font-size:12.5px;color:var(--muted);margin-top:3px}
+
+  /* ── Trust badges ── */
+  .trust-row{
+    display:flex;justify-content:center;gap:18px;
+    margin-top:14px;
+    flex-wrap:wrap;
   }
-  .faq-section h2 {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 700;
-    color: #111;
-    margin-bottom: 12px;
+  .trust-badge{
+    display:flex;align-items:center;gap:5px;
+    font-size:11.5px;color:var(--muted);font-weight:600;
   }
-  .faq-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .trust-icon{font-size:14px}
+
+  /* ── FAQ ── */
+  .faq-section{margin-top:16px}
+  .faq-section h2{font-size:15px;font-weight:800;text-align:center;margin-bottom:10px}
+  .faq-item{border-top:1px solid #f1f3f5}
+  .faq-item:last-child{border-bottom:1px solid #f1f3f5}
+  .faq-btn{
+    width:100%;background:none;border:0;
+    display:flex;justify-content:space-between;align-items:center;
+    font-weight:700;font-size:13.5px;cursor:pointer;
+    padding:13px 0;color:#111;text-align:left;
+    gap:10px;
   }
-  .faq-item {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  .faq-btn .arrow{
+    flex-shrink:0;color:var(--muted);font-style:normal;
+    font-size:11px;transition:transform .25s;
   }
-  .faq-btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: left;
-    padding: 14px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    color: #111;
+  .faq-btn[aria-expanded="true"] .arrow{transform:rotate(180deg)}
+  .faq-answer{
+    display:none;
+    padding-bottom:13px;
+    color:var(--muted);font-size:13px;line-height:1.6;
   }
-  .faq-btn svg {
-    flex-shrink: 0;
-    width: 16px;
-    height: 16px;
-    color: #666;
-    transition: transform 0.2s;
+  .faq-answer.open{display:block}
+
+  /* ── Sticky CTA ── */
+  .sticky-cta{
+    position:fixed;left:0;right:0;bottom:0;
+    margin:0 auto;max-width:var(--maxw);
+    padding:10px 16px 14px;
+    background:linear-gradient(to top,rgba(240,244,248,1) 70%,rgba(240,244,248,0));
+    pointer-events:none;
   }
-  .faq-btn.open svg { transform: rotate(180deg); }
-  .faq-answer {
-    display: none;
-    padding: 0 14px 14px;
-    font-size: 13px;
-    color: #444;
-    line-height: 1.6;
+  .sticky-cta .cta{pointer-events:auto;margin:0}
+
+  @media(min-width:480px){h1{font-size:23px}}
+  @media(prefers-reduced-motion:reduce){
+    .testimonial-item{transition:none}
+    .cta a{transition:none}
+    .dot{animation:none}
   }
-  .faq-answer.open { display: block; }
-  .rating-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-top: 16px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
-  }
-  .stars { color: #f5a623; font-size: 16px; letter-spacing: 1px; }
-  .rating-score { font-size: 13px; color: #555; font-weight: 500; }
-  .bottom-pad { height: 40px; }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="top-bar">3,500+ people already claimed it</div>
-
-<main>
-  <div class="logo-wrap">
-    <img src="logo.png" alt="Build-A-Bear Logo" class="logo-img">
+  <div class="top-bar">
+    <span class="dot"></span>
+    Trusted by 3,500+ verified users
   </div>
 
-  <div class="title-section">
-    <h1>Build-A-Bear Rewards</h1>
-    <p>Claim your $250 reward towards Build-A-Bear</p>
-  </div>
+  <div class="card" role="main">
 
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <span class="step-text">Click &ldquo;Claim Now&rdquo;</span>
+    <div class="logo">
+      <img src="logo.png" alt="Build‑A‑Bear Workshop logo" />
     </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <span class="step-text">Enter your email and basic information</span>
+
+    <div class="hero">
+      <h1>Claim Your $250 Build‑A‑Bear Reward</h1>
+      <p class="lead">Complete a few quick sponsored offers to unlock your $250 gift reward. Takes under 30 minutes.</p>
     </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <span class="step-text">Complete 4&ndash;5 sponsored offers</span>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <span class="step-text">Enjoy your $250 reward!</span>
-    </div>
-  </div>
 
-  <div class="cta-wrap">
-    <a href="https://linkthem.net/aff_c?offer_id=4664&aff_id=3471" rel="noopener noreferrer" class="cta-btn">CLAIM NOW</a>
-    <p class="disclaimer">Completing sponsored offers is required to claim your reward.</p>
-  </div>
-
-  <div class="live-feed-inline">
-    <img id="liveFeedAvatar" class="live-feed-avatar" src="https://i.pravatar.cc/40?img=32" alt="Profile">
-    <span class="live-feed-indicator"></span>
-    <span id="liveFeedText" class="live-feed-text">Ava from Austin just received their $250 Build-A-Bear Reward</span>
-  </div>
-
-  <div class="faq-section">
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq-list">
-
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggle(this)">
-          <span>How long do the offers take?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-answer">
-          Most offers take just a few minutes to complete. The entire process typically takes 15&ndash;30 minutes depending on the offers you choose.
+    <!-- Testimonials -->
+    <div class="testimonial-wrap" id="testimonialWrap" role="region" aria-label="Customer reviews">
+      <div class="testimonial-item active" data-index="0">
+        <img class="testimonial-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%231a6bbf'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3EE%3C/text%3E%3C/svg%3E" alt="Emma from California">
+        <div class="testimonial-copy">
+          <div class="t-stars">★★★★★</div>
+          <strong>Emma · California</strong>
+          <span>Got my code after finishing the 5th offer — it was much faster than I expected. Super smooth process!</span>
         </div>
       </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggle(this)">
-          <span>What are the offers?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-answer">
-          Offers include free trials, app downloads, surveys, and product sign-ups from our sponsors. You can pick the ones that interest you.
+      <div class="testimonial-item" data-index="1">
+        <img class="testimonial-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%23e05c2a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3EM%3C/text%3E%3C/svg%3E" alt="Mia from New York">
+        <div class="testimonial-copy">
+          <div class="t-stars">★★★★★</div>
+          <strong>Mia · New York</strong>
+          <span>Followed the steps on screen and my reward balance was ready to use in minutes. Couldn't believe it!</span>
         </div>
       </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggle(this)">
-          <span>How many offers do I need to complete?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-answer">
-          You'll need to complete 4&ndash;5 sponsored offers in order to unlock your $250 Build-A-Bear reward.
+      <div class="testimonial-item" data-index="2">
+        <img class="testimonial-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%23169b6b'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3EO%3C/text%3E%3C/svg%3E" alt="Olivia from Texas">
+        <div class="testimonial-copy">
+          <div class="t-stars">★★★★★</div>
+          <strong>Olivia · Texas</strong>
+          <span>Received the $250 reward code almost immediately after completing the offers. Great way to save on gifts!</span>
         </div>
       </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggle(this)">
-          <span>When will I receive my reward?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="faq-answer">
-          Rewards are typically processed within a few business days after all offers are verified as completed.
+      <div class="testimonial-item" data-index="3">
+        <img class="testimonial-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%238b3fbf'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3ES%3C/text%3E%3C/svg%3E" alt="Sara from Florida">
+        <div class="testimonial-copy">
+          <div class="t-stars">★★★★★</div>
+          <strong>Sara · Florida</strong>
+          <span>Was skeptical at first, but the final survey unlocked my $250 code shortly after. It really does work!</span>
         </div>
       </div>
-
+      <div class="testimonial-item" data-index="4">
+        <img class="testimonial-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Ccircle cx='19' cy='19' r='19' fill='%23c0343a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='white'%3EZ%3C/text%3E%3C/svg%3E" alt="Zoe from Washington">
+        <div class="testimonial-copy">
+          <div class="t-stars">★★★★★</div>
+          <strong>Zoe · Washington</strong>
+          <span>Exceeded my expectations. Got the discount code in my email just minutes after submitting everything.</span>
+        </div>
+      </div>
     </div>
 
+    <!-- Dots -->
+    <div class="t-dots" role="tablist" aria-label="Testimonial navigation">
+      <div class="t-dot on" role="tab" aria-selected="true"></div>
+      <div class="t-dot" role="tab" aria-selected="false"></div>
+      <div class="t-dot" role="tab" aria-selected="false"></div>
+      <div class="t-dot" role="tab" aria-selected="false"></div>
+      <div class="t-dot" role="tab" aria-selected="false"></div>
+    </div>
+
+    <!-- Rating -->
     <div class="rating-row">
-      <span style="font-weight:600;">Excellent</span>
-      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-      <span class="rating-score">4.9 / 5</span>
+      <div class="stars">★★★★★</div>
+      <div class="rating-label">4.9 / 5</div>
+      <div>— from 3,500+ users</div>
     </div>
-  </div>
 
-  <div class="bottom-pad"></div>
-</main>
+    <!-- Primary CTA -->
+    <div class="cta" style="margin-top:14px">
+      <a href="https://linkthem.net/aff_c?offer_id=4664&aff_id=3471" rel="noopener noreferrer" aria-label="Claim your $250 Build-A-Bear reward now">
+        🎁 CLAIM YOUR $250 NOW
+      </a>
+    </div>
+    <p class="cta-sub">Completing sponsored offers is required to claim your reward. We protect your privacy.</p>
+
+    <!-- Trust badges -->
+    <div class="trust-row">
+      <div class="trust-badge"><span class="trust-icon">🔒</span> Secure &amp; Private</div>
+      <div class="trust-badge"><span class="trust-icon">✅</span> Free to Claim</div>
+      <div class="trust-badge"><span class="trust-icon">⚡</span> Fast Verification</div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- How it works -->
+    <div class="steps-title">How It Works</div>
+    <div class="steps" role="list">
+      <div class="step" role="listitem">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-text">Tap "Claim Now"</div>
+          <div class="step-sub">Opens the secure offer portal</div>
+        </div>
+      </div>
+      <div class="step" role="listitem">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-text">Enter your details</div>
+          <div class="step-sub">Just your email and basic info</div>
+        </div>
+      </div>
+      <div class="step" role="listitem">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-text">Complete 4–5 sponsored offers</div>
+          <div class="step-sub">Short surveys, free trials, app downloads</div>
+        </div>
+      </div>
+      <div class="step" role="listitem">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-text">Receive your $250 reward</div>
+          <div class="step-sub">Delivered after offer verification</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- FAQ -->
+    <div class="faq-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+          How long do the offers take?
+          <i class="arrow">▾</i>
+        </button>
+        <div class="faq-answer">Most offers take just a few minutes each. The full process typically takes 15–30 minutes depending on which offers you choose.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+          What kinds of offers are there?
+          <i class="arrow">▾</i>
+        </button>
+        <div class="faq-answer">Offers include free trials, app downloads, short surveys, and product sign-ups from our sponsors. You choose which ones to complete.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+          How many offers do I need to complete?
+          <i class="arrow">▾</i>
+        </button>
+        <div class="faq-answer">You'll need to complete 4–5 sponsored offers to unlock your $250 Build‑A‑Bear reward.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+          When will I receive my reward?
+          <i class="arrow">▾</i>
+        </button>
+        <div class="faq-answer">Rewards are typically processed within a few business days once all offers are verified as complete.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false" onclick="toggleFAQ(this)">
+          Is my personal information safe?
+          <i class="arrow">▾</i>
+        </button>
+        <div class="faq-answer">Yes. Your information is only used to verify your reward eligibility and to send you your reward code. We never sell your data to third parties.</div>
+      </div>
+    </div>
+
+  </div><!-- .card -->
+</div><!-- .wrap -->
+
+<!-- Sticky bottom CTA -->
+<div class="sticky-cta" aria-hidden="true">
+  <div class="cta">
+    <a href="https://linkthem.net/aff_c?offer_id=4664&aff_id=3471" rel="noopener noreferrer" tabindex="-1">
+      🎁 CLAIM YOUR $250 NOW
+    </a>
+  </div>
+</div>
 
 <script>
-function toggle(btn) {
-  var answer = btn.nextElementSibling;
-  var isOpen = answer.classList.contains("open");
-  document.querySelectorAll(".faq-answer.open").forEach(function(el){ el.classList.remove("open"); });
-  document.querySelectorAll(".faq-btn.open").forEach(function(el){ el.classList.remove("open"); });
-  if (!isOpen) {
-    answer.classList.add("open");
-    btn.classList.add("open");
+  // ── Testimonial carousel (slower: 8 seconds) ──
+  var items   = document.querySelectorAll('.testimonial-item');
+  var dots    = document.querySelectorAll('.t-dot');
+  var current = 0;
+
+  function showTestimonial(next) {
+    // fade out current
+    items[current].classList.remove('active');
+    dots[current].classList.remove('on');
+    dots[current].setAttribute('aria-selected','false');
+
+    current = (next !== undefined ? next : (current + 1) % items.length);
+
+    // bring in next
+    items[current].classList.add('active');
+    dots[current].classList.add('on');
+    dots[current].setAttribute('aria-selected','true');
   }
-}
 
-var liveFeedText = document.getElementById('liveFeedText');
-var liveFeedAvatar = document.getElementById('liveFeedAvatar');
-var liveFeedItems = [
-  { text: 'Ava from Austin just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/65.jpg' },
-  { text: 'Mia from New York just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/68.jpg' },
-  { text: 'Emma from San Diego just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/45.jpg' },
-  { text: 'Olivia from Chicago just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/22.jpg' },
-  { text: 'Sophia from Houston just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/12.jpg' },
-  { text: 'Lily from Miami just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/34.jpg' },
-  { text: 'Chloe from Seattle just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/50.jpg' },
-  { text: 'Grace from Boston just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/54.jpg' },
-  { text: 'Ella from Denver just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/72.jpg' },
-  { text: 'Zoe from Vancouver just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/10.jpg' },
-  { text: 'Isabella from Toronto just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/77.jpg' },
-  { text: 'Amelia from London just received their $250 Build-A-Bear Reward', avatar: 'https://randomuser.me/api/portraits/women/42.jpg' }
-];
-var liveFeedIndex = 0;
+  // Auto-cycle every 8 seconds for a more natural, trustworthy feel
+  var timer = setInterval(function(){ showTestimonial(); }, 8000);
 
-function cycleLiveFeed() {
-  liveFeedText.classList.add('fade');
-  setTimeout(function() {
-    liveFeedIndex = (liveFeedIndex + 1) % liveFeedItems.length;
-    liveFeedText.textContent = liveFeedItems[liveFeedIndex].text;
-    liveFeedAvatar.src = liveFeedItems[liveFeedIndex].avatar;
-    liveFeedText.classList.remove('fade');
-  }, 300);
-}
+  // Allow dots to be clicked manually
+  dots.forEach(function(dot, i) {
+    dot.style.cursor = 'pointer';
+    dot.addEventListener('click', function() {
+      clearInterval(timer);
+      showTestimonial(i);
+      timer = setInterval(function(){ showTestimonial(); }, 8000);
+    });
+  });
 
-setInterval(cycleLiveFeed, 10000);
+  // ── FAQ accordion ──
+  function toggleFAQ(btn) {
+    var answer  = btn.nextElementSibling;
+    var isOpen  = btn.getAttribute('aria-expanded') === 'true';
+
+    // Close all
+    document.querySelectorAll('.faq-btn').forEach(function(b) {
+      b.setAttribute('aria-expanded','false');
+    });
+    document.querySelectorAll('.faq-answer').forEach(function(a) {
+      a.classList.remove('open');
+    });
+
+    // Open clicked one if it was closed
+    if (!isOpen) {
+      btn.setAttribute('aria-expanded','true');
+      answer.classList.add('open');
+    }
+  }
 </script>
-
 </body>
 </html>
